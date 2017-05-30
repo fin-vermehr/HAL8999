@@ -25,4 +25,9 @@ with open("/Users/finvermehr/Downloads/train.csv", "rb") as csvfile:
                          "Embarked": embarked}
 
             dic[column[0]] = local_dic
-    print(dic["344"])
+sum_, count = 0, 0
+for x in dic:
+    if dic[x]["Age"]:
+        count += 1
+        sum_ += float(dic[x]["Age"])
+print(sum_ / count)
