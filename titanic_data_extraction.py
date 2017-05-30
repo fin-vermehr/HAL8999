@@ -1,32 +1,33 @@
 #!/Library/Frameworks/Python.framework/Versions/3.5/bin/python3
 
 import csv
+from sklearn import svm
 
 with open("/Users/finvermehr/Downloads/train.csv", "r") as csvfile:
     spamreader = csv.reader(csvfile, delimiter=",", quotechar='|')
     dic = dict()
-    for column in spamreader:
-        if column[0] == "PassengerId":
+    for row in spamreader:
+        if row[0] == "PassengerId":
             pass
         else:
-            survived = column[1]
-            pclass = column[2]
-            name = (column[3] + column[4]).replace('"', "")
-            sex = column[5]
-            age = column[6]
-            sibsp = int(column[7])
-            parch = int(column[8])
-            ticket = column[9]
-            fare = column[10]
-            cabin = column[11]
-            embarked = column[12]
+            survived = row[1]
+            pclass = row[2]
+            name = (row[3] + row[4]).replace('"', "")
+            sex = row[5]
+            age = row[6]
+            sibsp = int(row[7])
+            parch = int(row[8])
+            ticket = row[9]
+            fare = row[10]
+            cabin = row[11]
+            embarked = row[12]
 
             local_dic = {"Survived": survived, "Pclass": pclass, "Name": name,
                          "Sex": sex, "Age": age, "SibSp": sibsp, "Parch": parch,
                          "Ticket": ticket, "Fare": fare, "Cabin": cabin,
                          "Embarked": embarked}
 
-            dic[column[0]] = local_dic
+            dic[row[0]] = local_dic
 sum_, count = 0, 0
 for x in dic:
     if dic[x]["Age"]:
