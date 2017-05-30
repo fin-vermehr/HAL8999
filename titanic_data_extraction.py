@@ -1,7 +1,6 @@
-#!/Library/Frameworks/Python.framework/Versions/3.5/bin/python3
 
 import csv
-from sklearn import svm
+import matplotlib.pyplot as plt
 
 with open("/Users/finvermehr/Downloads/train.csv", "r") as csvfile:
     spamreader = csv.reader(csvfile, delimiter=",", quotechar='|')
@@ -29,6 +28,8 @@ with open("/Users/finvermehr/Downloads/train.csv", "r") as csvfile:
 
             dic[row[0]] = local_dic
 sum_, count = 0, 0
+age_list = list()
+survived_list = list()
 for x in dic:
     if dic[x]["Age"]:
         count += 1
@@ -38,4 +39,10 @@ for x in dic:
         dic[x]["Age"] = float(sum_ / count)
     else:
         dic[x]["Age"] = float(dic[x]["Age"])
-print(dic["6"])
+
+    age_list.append(dic[x]["Age"])
+    survived_list.append(dic[x]["Survived"])
+print(age_list)
+
+plt.plot(age_list, survived_list, "ro")
+plt.show()
