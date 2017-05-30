@@ -19,6 +19,8 @@ sc.fit(X_train)
 X_train_std = sc.transform(X_train)
 X_test_std = sc.transform(X_test)
 
+print(X)
+print(y.shape)
 
 ppn = Perceptron(n_iter=40, eta0=0.1, random_state=0)
 ppn.fit(X_train_std, y_train)
@@ -50,13 +52,6 @@ def plot_decision_regions(X, y, classifier, test_idx=None, resolution=0.02):
 
 X_combined_std = np.vstack((X_train_std, X_test_std))
 y_combined = np.hstack((y_train, y_test))
-#plot_decision_regions(X=X_combined_std, y=y_combined, classifier=ppn,
-#                      test_idx=range(105, 150))
-#plt.xlabel('petal length [standardized]')
-#plt.ylabel('pretal width [standardized]')
-#plt.legend(loc='upper left')
-#plt.show()
-
 svm = SVC(kernel="linear", C=1.0, random_state=0)
 svm.fit(X_train_std, y_train)
 plot_decision_regions(X_combined_std, y_combined, classifier=svm, test_idx=range(105,150))
