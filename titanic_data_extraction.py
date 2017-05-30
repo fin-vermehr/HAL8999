@@ -4,10 +4,25 @@ with open("/Users/finvermehr/Downloads/train.csv", "rb") as csvfile:
     spamreader = csv.reader(csvfile, delimiter=",", quotechar='|')
     dic = dict()
     for column in spamreader:
-        local_dic = {"Survived": column[1]}
+        if column[0] == "PassengerId":
+            pass
+        else:
+            survived = column[1]
+            pclass = column[2]
+            name = (column[3] + column[4]).replace('"', "")
+            sex = column[5]
+            age = column[6]
+            sibsp = int(column[7])
+            parch = int(column[8])
+            ticket = column[9]
+            fare = column[10]
+            cabin = column[11]
+            embarked = column[12]
 
+            local_dic = {"Survived": survived, "Pclass": pclass, "Name": name,
+                         "Sex": sex, "Age": age, "SibSp": sibsp, "Parch": parch,
+                         "Ticket": ticket, "Fare": fare, "Cabin": cabin,
+                         "Embarked": embarked}
 
-#        local_dic = {"Survived": column[1], "Pclass": column[2], "Name": (column[3] + column[4]), "Sex": column[5], "Age": column[6], "SibSp": column[7], "Parch": column[8], "Ticket": column[9], "Fare": column[10], "Cabin": column[11], "Embarked": column[12]}
-#        dic[column[0]] = local_dic
-
-# print(dic['1']["Name"])
+            dic[column[0]] = local_dic
+    print(dic["344"])
