@@ -1,6 +1,8 @@
+#!/Library/Frameworks/Python.framework/Versions/3.5/bin/python3
+
 import csv
 
-with open("/Users/finvermehr/Downloads/train.csv", "rb") as csvfile:
+with open("/Users/finvermehr/Downloads/train.csv", "r") as csvfile:
     spamreader = csv.reader(csvfile, delimiter=",", quotechar='|')
     dic = dict()
     for column in spamreader:
@@ -30,4 +32,9 @@ for x in dic:
     if dic[x]["Age"]:
         count += 1
         sum_ += float(dic[x]["Age"])
-print(sum_ / count)
+for x in dic:
+    if not dic[x]["Age"]:
+        dic[x]["Age"] = float(sum_ / count)
+    else:
+        dic[x]["Age"] = float(dic[x]["Age"])
+print(dic["6"])
