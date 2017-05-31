@@ -9,6 +9,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import Perceptron
 import csv
 from sklearn import svm
+from mpl_toolkits.mplot3d import Axes3D
 
 with open("/Users/finvermehr/Downloads/train.csv", "r") as csvfile:
     spamreader = csv.reader(csvfile, delimiter=",", quotechar='|')
@@ -21,6 +22,10 @@ with open("/Users/finvermehr/Downloads/train.csv", "r") as csvfile:
             pclass = row[2]
             name = (row[3] + row[4]).replace('"', "")
             sex = row[5]
+            if row[5].strip() == "male":
+                sex = 0
+            else:
+                sex = 1
             age = row[6]
             sibsp = int(row[7])
             parch = int(row[8])
@@ -54,7 +59,8 @@ target = list()
 array_list = list()
 
 for x in dic:
-    sample = [int(dic[x]["Pclass"]), int(dic[x]["Age"])]
+    sample = [int(dic[x]["Pclass"]), int(dic[x]["Age"]), int(dic[x]["Parch"]),
+              int(dic[x]["SibSp"]), int(dic[x]["Sex"])]
     target.append(int(dic[x]["Survived"]))
     array_list.append(sample)
 
@@ -67,20 +73,39 @@ for x in dic:
 # X = np.array(array_list).reshape((891, 2))
 # y = target
 # print(type(y))
-print(len(target))
-print(len(array_list))
+#print(len(target))
+#print(len(array_list))
 X = array_list
 y = target
 clf = svm.SVC()
 clf.fit(X, y)
-print(clf.predict([[3, 60]]))
+print(clf.predict([[1, 20, 1, 2, 1]]))
 
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
 index = 0
+
 for i in target:
     if i == 0:
-        plt.plot([X[index][0]], [X[index][1]], marker='o', markersize=6, color='red', label="Dead")
+        Pclass = X[index][0]
+        Age = X[index][1]
+        Parch = X[index][-1]
+
+        ax.scatter(Pclass, Age, Parch, c='r', marker='o')
+
     else:
-        plt.plot([X[index][0]], [X[index][1]], marker='x', markersize=6, color='blue', label="Alive")
+        Pclass = X[index][0]
+        Age = X[index][1]
+        Parch = X[index][-1]
+
+        ax.scatter(Pclass, Age, Parch, c='b', marker='x')
     index += 1
+ax.set_xlabel('Class')
+ax.set_ylabel('Age')
+ax.set_zlabel('Sex')
+
+print(X)
+print(y)
+
 
 plt.show()
